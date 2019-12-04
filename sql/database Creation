@@ -1,0 +1,12 @@
+CREATE TABLE Race (ID int PRIMARY KEY GENERATED ALWAYS AS IDENTITY(START WITH 1, INCREMENT BY 1), Name VARCHAR(255), Speed int);
+CREATE TABLE AbilityScore (ID int PRIMARY KEY GENERATED ALWAYS AS IDENTITY(START WITH 1, INCREMENT BY 1), Ability VARCHAR(25));
+CREATE TABLE RaceAbilityScoreBonus (RaceID int REFERENCES Race(ID), AbilityScoreID int REFERENCES AbilityScore(ID), Amount int);
+CREATE TABLE Role (ID int PRIMARY KEY GENERATED ALWAYS AS IDENTITY(START WITH 1, INCREMENT BY 1), Name VARCHAR(255), HitDie int);
+CREATE TABLE ClassSavingThrows (ClassID int REFERENCES Role(ID), AbilityScoreID int REFERENCES AbilityScore(ID));
+CREATE TABLE MadeCharacter (ID int PRIMARY KEY GENERATED ALWAYS AS IDENTITY(START WITH 1, INCREMENT BY 1), Name VARCHAR(255), PlayerName VARCHAR(255), Level int);
+CREATE TABLE CharacterAbilityScores (CharacterID int REFERENCES MadeCharacter(ID), AbilityScoreID int REFERENCES AbilityScore(ID), Value int);
+CREATE TABLE CharacterClass (CharacterID int REFERENCES MadeCharacter(ID), RoleID int REFERENCES Role(ID));
+
+INSERT INTO AbilityScore(Ability) VALUES('Strength'), ('Dexterity'), ('Constitution'), ('Intelligence'), ('Wisdom'), ('Charisma');
+INSERT INTO Race(Name, Speed) VALUES('Dragonborn', 30), ('Dwarf', 25), ('Elf', 30), ('Gnome', 25), ('Half-Elf', 30), ('Halfling', 25), ('Half-Orc', 30), ('Human', 30), ('Tiefling', 30);
+INSERT INTO Role(Name, HitDie) VALUES('Barbarian', 12), ('Bard', 8), ('Cleric', 8), ('Druid', 8), ('Fighter', 10), ('Monk', 8), ('Paladin', 10), ('Ranger', 10), ('Rogue', 8), ('Sorcerer', 6), ('Warlock', 8), ('Wizard', 6);
